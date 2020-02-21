@@ -12,38 +12,16 @@
                 <span></span>
             </div>
 
-            <div>
-                <label style='margin-left: 46%; margin-bottom: 1%;'> Select The Required Information</label>
-                <form style='margin-left:35%; margin-bottom:5%;' action='/choose-paid-students' method='post'>
-                    <select name='Year' style='width: 25%;'>
-                        <option selected>Select the year</option>
-                        <option value='2020'>2020</option>
-                        <option value='2021'>2021</option>
-                        <option value='2022'>2022</option>
-                        <option value='2023'>2023</option>
-                        <option value='2024'>2024</option>
-                        <option value='2025'>2025</option>
-                        <option value='2026'>2026</option>
-                        <option value='2027'>2027</option>
-                        <option value='2028'>2028</option>
-                        <option value='2029'>2029</option>
-                        <option value='2030'>2030</option>
-                    </select>
-                    <select name='Month' style="width: 25%;">
-                        <option selected>Select the month</option>
-                        <option value='1'>January</option>
-                        <option value='2'>February</option> 
-                        <option value='3'>March</option>
-                        <option value='4'>April</option>
-                        <option value='5'>May</option>
-                        <option value='6'>June</option>
-                        <option value='7'>July</option>
-                        <option value='8'>August</option>
-                        <option value='9'>September</option>
-                        <option value='10'>October</option>
-                        <option value='11'>November</option>
-                        <option value='12'>December</option>
-                    </select>
+            <div style="width:100%">
+                <label style=' display: table;margin: 0 auto; margin-bottom: 1%;'> Select The Date Range of Payment</label>
+                <form style=' display: table;margin: 0 auto; margin-bottom:5%;' action='/choose-paid-students' method='post'>
+                    <div id="reportrange" style=" background: #fff; cursor: pointer; padding: 5px 10px; margin: 10px; border: 1px solid #ccc; width: 350px; display: inline">
+                        <i class="fa fa-calendar"></i>&nbsp;
+                        <span></span>
+                        <i class="fa fa-caret-down"></i>
+                    </div>
+                    <input name="start" hidden/>
+                    <input name="end" hidden/>
                     <input type="submit" value="Show"/>
                 </form>
             </div>
@@ -105,28 +83,38 @@
 <script src="assets/js/wow.min.js"></script>
 <!-- form-contact js -->
 <script src="assets/js/form-contact.js"></script>
-<!-- map js -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwIQh7LGryQdDDi-A603lR8NqiF3R_ycA"></script>
+<!-- Date range picker js -->
+<script src="assets/js/moment.min.js"></script>
+<script src="assets/js/daterangepicker.min.js"></script>
 <!-- scripts js -->
 <script src="assets/js/scripts.js"></script>
 <script type="text/javascript">
-    /*START GOOGLE MAP*/
-    function initialize() {
-        var mapOptions = {
-            zoom: 15,
-            scrollwheel: false,
-            center: new google.maps.LatLng(40.7127837, -74.00594130000002)
-        };
-        var map = new google.maps.Map(document.getElementById('map'),
-            mapOptions);
-        var marker = new google.maps.Marker({
-            position: map.getCenter(),
-            icon: 'assets/img/map_pin.png',
-            map: map
-        });
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
-        /*END GOOGLE MAP*/
+    $(function() {
+        var start = moment();
+        var end = moment();
+
+        function cb(start, end) {
+            $('[name=start]').val(start.format("YYYY-MM-DD"))
+            $('[name=end]').val(end.format("YYYY-MM-DD"))
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        }
+
+        $('#reportrange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+               'Today': [moment(), moment()],
+               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+               'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+               'This Month': [moment().startOf('month'), moment().endOf('month')],
+               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+               'This Year': [moment().startOf('year'), moment().endOf('year')]
+            }
+        }, cb);
+
+        cb(start, end);
+    });
 </script>
 </body>
 
