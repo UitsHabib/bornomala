@@ -12,6 +12,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cookie-session": "^1.4.0",
     "ejs": "^2.7.2",
     "excel4node": "^1.7.2",
     "exceljs": "^3.4.0",

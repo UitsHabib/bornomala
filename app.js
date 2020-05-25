@@ -2,9 +2,10 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const path = require('path');
-const app = express();
-const session = require('express-session');
+const cookieSession = require('cookie-session')
 
+
+const app = express();
 const port = process.env.PORT || 5000;
 
 // configure middleware
@@ -17,11 +18,11 @@ app.use(bodyParser.urlencoded({ limit: '500mb', extended: true }));
 app.use(bodyParser.json()); // parse form data client
 app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
 app.use(fileUpload()); // configure fileupload
-app.use(session({
-    secret: "Shh, its a secret!",
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge : 1000 * 60 * 60 * 24, httpOnly: true }
+
+app.use(cookieSession({
+    name: 'session',
+    keys: ['@ll@care@s3cret'],
+    maxAge:  30 * 24 * 60 * 60 * 1000, // 30 days
 }));
 
 
@@ -30,6 +31,6 @@ app.use(session({
 const router = require('./router')
 app.use('/', router)
 
-app.listen(port, function () {
+app.listen(port, function() {
     console.log(`Server running on port: ${port}`);
 });
