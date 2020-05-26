@@ -22,7 +22,8 @@ router.post('/add-teacher', dataController.enteringTeacher)
 router.get('/add-payment', dataController.addPayment)
 router.post('/add-payment', dataController.enteringPayment)
 router.get('/admin-update-password', dataController.adminUpdatePassword)
-
+router.get('/update-student-info/:id', dataController.updateStudentPage)
+router.post('/update-student-info/:id', dataController.updateStudent)
 
 //getting data
 router.get('/teacher-list', dataController.getTeacher)

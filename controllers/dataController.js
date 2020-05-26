@@ -155,6 +155,31 @@ exports.studentInfo = function (req, res) {
     })
 }
 
+//update the student page
+exports.updateStudentPage = function (req, res) {
+    let dataRetrieve = new DataRetrieve(req)
+    dataRetrieve.getStudentInfo().then( function (result){
+        res.render('update-student-info', {admin: req.session.user.username, item: dataRetrieve.data[0] })
+    })
+    .catch(function (e) {
+        console.log(e)
+        res.redirect('/login')
+    })
+}
+
+//update the student data
+exports.updateStudent = function (req, res) {
+    let datainsert = new DataInsert (req)
+    datainsert.updateStudentData().then( function (result){
+        res.redirect('/student-info/'+req.params.id)
+    })
+    .catch(function (e) {
+        console.log(e)
+        res.redirect('/login')
+    })
+}
+
+
 // delete a student
 exports.deleteStudent = function (req, res) {
     let dataRetrieve = new DataRetrieve(req)

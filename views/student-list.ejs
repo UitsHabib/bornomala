@@ -45,6 +45,7 @@
                             <th scope="col">Class</th>
                             <th scope="col">Profile</th>
                             <th scope="col">Deletion</th>
+                            <th scope="col">Update</th>
                         </tr>
                     </thead>
 
@@ -56,6 +57,7 @@
                             <td><%= item.Class %></td>
                             <td><button type="button" class="btn  btn-contact-bg"><a href="/student-info/<%= item.StudentID%>">View Profile</a></button></td>
                             <td><button type="button" class="btn  btn-contact-bg"><a href="/student-delete/<%= item.StudentID%>">Delete Student</a></button></td>
+                            <td><button type="button" class="btn  btn-contact-bg"><a href="/update-student-info/<%= item.StudentID%>">Update Student</a></button></td>
                         </tr>
                         <% }) %>
                     </tbody>

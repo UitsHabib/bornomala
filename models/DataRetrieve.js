@@ -50,8 +50,8 @@ DataRetrieve.prototype.getTeacherList = function () {
 //paid student list retrieve
 DataRetrieve.prototype.getPaidStudentList = function () {
     return new Promise((resolve, reject) => {
-        var sql = "select *from student where CochingId IN (select CochingId from payment where Year = '" + this.data.Year + "' and Month = '" + this.data.Month +"' and Type='Student');"
-        db.query(sql, (err, result) => {
+        var sql = "select *from student where CochingId IN (select CochingId from payment where paymentDate Between ? and ? and Type='Student');"
+        db.query(sql, [this.data.start, this.data.end], (err, result) => {
             if (err) {
                 reject(err)
             }

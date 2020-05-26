@@ -50,8 +50,58 @@ DataInsert.prototype.saveStudentData = function () {
         reject(err)
       }
       else {
-        this.errors.push({msg: "Succecfully Data Inserted"})
-        resolve("successfull!")
+        this.errors.push({msg: "Successfully Data Inserted"})
+        resolve("successful!")
+      }
+    })
+  })
+}
+
+
+DataInsert.prototype.updateStudentData = function () {
+  return new Promise((resolve, reject) => {
+
+    var profilePhoto = this.data.body.profilePhoto;
+
+    if (this.data.files && Object.keys(this.data.files).length != 0) {
+      var file = this.data.files.img;
+      var uploadpath = "public/assets/img/upload_images/" + file.name;
+
+      file.mv(uploadpath, function (err) {
+        if (err) {
+          this.errors.push({msg: "give a valid name"})
+          reject()
+          return
+        }
+      });
+      profilePhoto = file.name;
+    }
+
+
+    var studentId = this.data.params.id
+    var CochingId = this.data.body.CochingId
+    var name = this.data.body.name
+    var phone = this.data.body.phone
+    var gender = this.data.body.gender
+    var address = this.data.body.address
+    var stclass = this.data.body.class
+    var institute = this.data.body.instituteName
+    var addmission = this.data.body.AddmissionDate
+    var fee = this.data.body.TutionFee
+    var gname = this.data.body.GuardianName
+    var gphone = this.data.body.GuardianPhone
+    var relation = this.data.body.relation
+    var gaddress = this.data.body.GuardianAddress
+    var goccupation = this.data.body.occupation
+    var sql = "UPDATE student SET CochingId=?, StudentName=?, PhoneNumber=?, Gender=?, Address=?, Image=?, InstitutionName=?, Class=?, AdmissionDate=?, GuardianName=?, GuardianOccupation=?, Relation=?, GuardianPhoneNumber=?, GuardianAddress=?, MonthlyPayment=? where StudentID=?;"
+    db.query(sql, [CochingId, name, phone, gender, address, profilePhoto, institute, stclass, addmission, gname, goccupation, relation, gphone, gaddress, fee, studentId], (err, result) => {
+      if (err) {
+        this.errors.push({msg: "Failed to Update Data"})
+        reject(err)
+      }
+      else {
+        this.errors.push({msg: "Successfully Data Updated"})
+        resolve("successful!")
       }
     })
   })

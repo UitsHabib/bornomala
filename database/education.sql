@@ -51,6 +51,7 @@ CREATE TABLE `payment` (
   `Id` int(11) NOT NULL,
   `CochingId` varchar(255) DEFAULT NULL,
   `Name` varchar(255) DEFAULT NULL,
+  `Year` varchar(255) DEFAULT NULL,
   `Month` varchar(255) DEFAULT NULL,
   `PaymentDate` date DEFAULT NULL,
   `Type` varchar(20) DEFAULT NULL
